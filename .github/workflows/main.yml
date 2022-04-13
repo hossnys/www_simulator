@@ -1,25 +1,51 @@
 
 name: deploy website
-
 on:
-  push:
-    branches:
-      - master
+  schedule:
+    - cron: "*/5 * * * *"
+    
   release:
     types: [published]
-
 jobs:
-    deploy:
-      runs-on: ubuntu-latest
-      steps:
-      - uses: actions/checkout@v2
-      - name: deploying website OVH production server 
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.PROD_OVH_HOST }}
-          username: ${{ secrets.PROD_OVH_USER }}
-          key: ${{ secrets.PROD_SSH_KEY }}
-          passphrase: ${{ secrets.PROD_SSH_KEY_PASSPHRASE }}
-          rm: true
-          source: "root"
-          target: "${{ secrets.PROD_OVH_DIR }}"
+  build-and-deploy:
+
+    runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: "--max-old-space-size=4096"
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'yarn'
+        cache-dependency-path: '**/yarn.lock'
+
+    - name: Install dependencies
+      run: |
+        git clone git@github.com:threefoldtech/grid_weblets.git
+        cd grid_weblets
+        yarn install
+        cd easy-docs && yarn install
+        cd .. && yarn build:app
+        cp /grid_weblets/docs/build/elements/farmingcalculator.wc.js /root/www_simulator/src
+        
+
+
+    - name: deploying website OVH production server 
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.PROD_OVH_HOST }}
+        username: ${{ secrets.PROD_OVH_USER }}
+        key: ${{ secrets.PROD_SSH_KEY }}
+        passphrase: ${{ secrets.PROD_SSH_KEY_PASSPHRASE }}
+        rm: true
+        source: "/src"
+        target: "${{ secrets.PROD_OVH_DIR }}"
