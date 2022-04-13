@@ -46,7 +46,7 @@ jobs:
         cd .. && yarn build:app
         pwd
         ls 
-        cp docs/build/elements/farmingcalculator.wc.js ../www_simulator/src
+        cp docs/build/elements/farmingcalculator.wc.js ../www_simulator/src/
         
 
 
