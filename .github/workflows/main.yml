@@ -42,7 +42,9 @@ jobs:
         yarn install
         cd easy-docs && yarn install
         cd .. && yarn build:app
-        cp /grid_weblets/docs/build/elements/farmingcalculator.wc.js /root/www_simulator/src
+        pwd
+        ls 
+        cp /grid_weblets/docs/build/elements/farmingcalculator.wc.js ../www_simulator/src
         
 
 
