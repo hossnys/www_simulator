@@ -37,7 +37,7 @@ jobs:
     
     - name: Install dependencies
       run: |
-        git clone git@github.com:threefoldtech/grid_weblets.git
+        git clone https://github.com/threefoldtech/grid_weblets.git
         cd grid_weblets
         yarn install
         cd easy-docs && yarn install
