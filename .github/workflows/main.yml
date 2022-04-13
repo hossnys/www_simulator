@@ -41,6 +41,8 @@ jobs:
         cd grid_weblets
         yarn install
         cd easy-docs && yarn install
+        pwd
+        ls 
         cd .. && yarn build:app
         pwd
         ls 
