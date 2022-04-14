@@ -54,5 +54,5 @@ jobs:
         key: ${{ secrets.PROD_SSH_KEY }}
         passphrase: ${{ secrets.PROD_SSH_KEY_PASSPHRASE }}
         rm: true
-        source: "docs/build/elements/farmingcalculator.wc.js"
+        source: "grid_weblets/docs/build/elements/farmingcalculator.wc.js"
         target: "${{ secrets.PROD_OVH_DIR }}"
