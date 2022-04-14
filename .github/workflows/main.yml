@@ -42,10 +42,9 @@ jobs:
         yarn install
         cd easy-docs && yarn install
         pwd
-        ls 
-        cd .. && yarn build:app
+        yarn build:app
         pwd
-        ls 
+
         
 
 
