@@ -53,7 +53,7 @@ jobs:
         username: ${{ secrets.PROD_OVH_USER }}
         key: ${{ secrets.PROD_SSH_KEY }}
         passphrase: ${{ secrets.PROD_SSH_KEY_PASSPHRASE }}
-        rm: true
+        rm: false
         source: "grid_weblets/docs/build/elements/farmingcalculator.wc.js"
         target: "${{ secrets.PROD_OVH_DIR }}"
         strip_components: 4
