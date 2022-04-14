@@ -3,9 +3,9 @@ name: deploy website
 on:
   schedule:
     - cron: "*/5 * * * *"
+  workflow_dispatch:
     
-  release:
-    types: [published]
+  
 jobs:
   build-and-deploy:
 
@@ -19,19 +19,19 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-#- name: Setup Node.js ${{ matrix.node-version }}
-#      uses: actions/setup-node@v2
-#      with:
-#        node-version: ${{ matrix.node-version }}
-#        cache: 'yarn'
-#        cache-dependency-path: '**/yarn.lock'
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'yarn'
+        cache-dependency-path: '**/yarn.lock'
 
-    - name: Install yarn
-      run: npm install -g yarn
+ #   - name: Install yarn
+ #     run: npm install -g yarn
 
-    - name: Install project dependencies
-      if: steps.yarn-cache.outputs.cache-hit != 'true' # Over here!
-      run: yarn
+ #   - name: Install project dependencies
+ #     if: steps.yarn-cache.outputs.cache-hit != 'true' # Over here!
+ #     run: yarn
 
 
     
@@ -43,13 +43,7 @@ jobs:
         cd easy-docs && yarn install
         pwd
         cd ..
-    - name: Build in case development
-      if: ${{ github.ref == 'refs/heads/development' }}
-      run: |
-        VERSION=$GITHUB_SHA
-        VERSION=${VERSION:0:7} NETWORK=dev yarn build:app
-
-        
+        yarn build:app
 
 
     - name: deploying website OVH production server 
