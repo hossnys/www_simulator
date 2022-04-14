@@ -56,3 +56,4 @@ jobs:
         rm: true
         source: "grid_weblets/docs/build/elements/farmingcalculator.wc.js"
         target: "${{ secrets.PROD_OVH_DIR }}"
+        strip_components: 4
