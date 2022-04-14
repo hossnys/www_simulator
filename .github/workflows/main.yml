@@ -42,8 +42,12 @@ jobs:
         yarn install
         cd easy-docs && yarn install
         pwd
-        yarn build:app
-        pwd
+        cd ..
+    - name: Build in case development
+      if: ${{ github.ref == 'refs/heads/development' }}
+      run: |
+        VERSION=$GITHUB_SHA
+        VERSION=${VERSION:0:7} NETWORK=dev yarn build:app
 
         
 
