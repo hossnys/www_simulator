@@ -47,7 +47,7 @@ jobs:
       if: ${{ github.ref == 'refs/heads/development' }}
       run: |
         VERSION=$GITHUB_SHA
-        VERSION=${VERSION:0:7} NETWORK=dev yarn build:app
+        VERSION=${VERSION:0:7} NETWORK=dev yarn run build:app
 
         
 
